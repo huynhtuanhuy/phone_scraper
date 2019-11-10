@@ -32,7 +32,7 @@ def requestCheck(phoneNumber, company, data):
         s.cookies = cookieResponse.cookies
         d = pq(cookieResponse.text)
         token = d('#hdnAntiForgeryTokens').val()
-
+        # logging.info("Token: " + token)
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Host': domain.replace('https://', '', 1).replace('http://', '', 1),
@@ -48,6 +48,7 @@ def requestCheck(phoneNumber, company, data):
         response = s.post(post_url, data=data)
         responseJson = json.loads(response.text)
         # print(responseJson)
+        # logging.info("Code: " + str(responseJson['Code']))
         if responseJson['Code'] != 0:
             f = open("./results/results.csv", "a")
             f.write(str(phoneNumber)+"\n")
@@ -98,8 +99,10 @@ async def main():
                                     f1[i].strip(),
                                     i
                                 )
-                                for i in range(1000)
-                                # range(len(f1))
+                                for i in range(
+                                    1000
+                                    # len(f1)
+                                )
                             ]
                             for response in await asyncio.gather(*futures):
                                 pass
