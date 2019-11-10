@@ -84,7 +84,7 @@ try:
                     if i < 500:
                         # logging.info("Start check: " + phoneNumber.strip())
                         q.put(phoneNumber.strip())
-                        # print(i)
+                        print(i)
                     i += 1
                 q.join()
         logging.info("End check!")
