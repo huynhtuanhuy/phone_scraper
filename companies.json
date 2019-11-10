@@ -1,0 +1,343 @@
+[
+    {
+        "domains": [
+			"http://m.100perak.com",
+			"http://m.96321478.com",
+			"http://m.hdpqqdw.com",
+			"http://m.qqjackpot.com"
+        ],
+		"get_url": "/id-ID/Member/Register",
+		"post_url": "/id-ID/Member/CheckNumber",
+		"language": "id-ID",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"https://ibosport1.com",
+			"https://180ibo.net",
+			"https://bola180.com",
+			"https://dadu180.com",
+			"https://ibo789.com",
+			"https://ibosport.club",
+			"https://ibosport.com",
+			"https://ibosport.live",
+			"https://ind180.com",
+			"https://pialadunia180.com",
+			"https://rendangindo.com",
+			"https://sotoindo.com"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__requestverificationtoken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://baru368.xyz",
+			"http://m368bet.info",
+			"http://m368bet.net",
+			"http://m368cash.info",
+			"http://m368cash.net",
+			"http://mega368.com",
+			"http://mega368.org",
+			"http://megacasino99.com",
+			"http://qqbola368.com",
+			"http://qqm368.info",
+			"http://qqm368.org",
+			"http://qqmega368.info",
+			"http://qqmega368.net",
+			"http://qqmega368.org"
+        ],
+		"get_url": "/id-ID/Member/Register",
+		"post_url": "/id-ID/Member/CheckNumber",
+		"language": "id-ID",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://interbola.me",
+			"http://v88asia.com",
+			"http://v88bola.co",
+			"http://v88bola.com",
+			"http://v88cash.com",
+			"http://v88fun.com",
+			"http://v88hot.com",
+			"http://v88id.com",
+			"http://v88qq.com",
+			"http://v88pop.com",
+			"http://v88zz.com"
+        ],
+		"get_url": "/id-ID/Member/Register",
+		"post_url": "/id-ID/Member/CheckNumber",
+		"language": "id-ID",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://megawin77.site",
+			"http://megawin77.win",
+			"http://megawin77aa.com",
+			"http://megawin77aa.net",
+			"http://megawin77bola.com",
+			"http://megawin77casino.com",
+			"http://megawin77poker.com",
+			"http://megawin77slot.com",
+			"http://mw77top.com",
+			"http://mw77yes.com"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://8788q.com",
+			"http://8878qq.com",
+			"http://qq8788a.com",
+			"http://hiqq.qq8788.com",
+			"http://qq8788.info",
+			"http://qq8788.me",
+			"http://hiqq.qq8788.net",
+			"http://qq8788.xyz",
+			"http://tianyingbet.net",
+			"http://tianyingbet.org",
+			"http://qq8878.net"
+        ],
+		"get_url": "/vi-VN/Member/Register",
+		"post_url": "/vi-VN/Member/CheckNumber",
+		"language": "vi-VN",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"https://10juta.com",
+			"https://akai88.com",
+			"https://fb88.info",
+			"https://fbdpoker.com",
+			"https://fullbet88.com",
+			"https://fullbet88aa.com",
+			"https://qqfb.biz",
+			"https://tigasodara.com"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://11bolaxl.com",
+			"http://11bola.info",
+			"http://11bola.net",
+			"http://11bola.org",
+			"http://11bolabet.com",
+			"http://11bolabet.info",
+			"http://11bolabet.net",
+			"http://11bolabet.org"
+        ],
+		"get_url": "/id-ID/Member/Register",
+		"post_url": "/id-ID/Member/CheckNumber",
+		"language": "id-ID",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://batman88bet.com",
+			"http://batman88bola.com",
+			"http://batman88g.com",
+			"http://batman88slot.com",
+			"http://batman88toto.com",
+			"http://batmanqq.com",
+			"http://batmanqq.net"
+        ],
+		"get_url": "/id-ID/Member/Register",
+		"post_url": "/id-ID/Member/CheckNumber",
+		"language": "id-ID",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://368bca.com",
+			"http://bca368.net",
+			"http://bca368.org",
+			"http://bca368qq.com",
+			"http://bni368.com",
+			"http://bri368.com",
+			"http://mandiri368.com",
+			"http://qq368bca.com"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://hoki333.com",
+			"http://saranghoki2.com",
+			"http://hokisport9.com",
+			"http://jamhoki7.com",
+			"http://memberhoki8.com",
+			"http://palinghoki.com",
+			"http://userhoki3.com"
+        ],
+		"get_url": "/id-ID/Member/Register",
+		"post_url": "/id-ID/Member/CheckNumber",
+		"language": "id-ID",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://krk88.com",
+			"http://macau442.org",
+			"http://macau532.com",
+			"http://mc199.com",
+			"http://mc222.net",
+			"http://mp433.com",
+			"http://pro451.com"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://okto88bola.com",
+			"http://okto88indo.com",
+			"http://okto88mantap.com",
+			"http://okto88menang.com",
+			"http://okto88poker.com",
+			"http://okto88slot.com"
+        ],
+		"get_url": "/id-ID/Member/Register",
+		"post_url": "/id-ID/Member/CheckNumber",
+		"language": "id-ID",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://laza88.cc",
+			"http://laza88.org",
+			"http://laza99.biz",
+			"http://lazabet.xyz",
+			"http://lazabet.zone",
+			"http://lazacasino.net"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://qq1221ok.org",
+			"http://qq1221.info",
+			"http://qq1221.org",
+			"http://qq1221a.com",
+			"http://qq1221b.com",
+			"http://qq1221.net"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://qq21pedia.com",
+			"http://qq21pedia.net",
+			"http://qq21pedia.org",
+			"http://jarisatu.com",
+			"http://pipibesar.com",
+			"http://pitabiru.com"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://grab188.com",
+			"http://langit188.com",
+			"http://logo188.com",
+			"http://sb188.info",
+			"http://sb188gojek.com",
+			"http://sb188asia.com"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    },
+    {
+        "domains": [
+			"http://qq2889.online",
+			"http://qq2889.info",
+			"http://qq2889.net",
+			"http://qq2889.org",
+			"http://qq2889.website",
+			"http://qq2889.xyz"
+        ],
+		"get_url": "/en-US/Member/Register",
+		"post_url": "/en-US/Member/CheckNumber",
+		"language": "en-US",
+		"string_check": "\"Code\":0",
+		"string_requestverificationtoken": "__RequestVerificationToken",
+		"token": "",
+		"rawCookies": ""
+    }
+]
