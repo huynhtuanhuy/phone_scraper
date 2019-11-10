@@ -95,16 +95,18 @@ try:
     for subdir, dirs, files in os.walk("./raw_data"):
         for file in files:
             if ".csv" in file:
-                logging.info("Start check!")
+                logging.info("Start check file " + file)
                 filepath = subdir + os.sep + file
                 if filepath.endswith(".csv"):
                     f = open(filepath, "r")
                     f1 = f.readlines()
+                    f.close()
                     for i in range(len(f1)):
-                        if i < 500:
-                            q.put(f1[i].strip())
-                            print(i)
+                        # if i < 1000:
+                        q.put(f1[i].strip())
+                        # print(i)
                     q.join()
+                logging.info("End check file " + file)
         logging.info("End check!")
 except KeyboardInterrupt:
     sys.exit(1)

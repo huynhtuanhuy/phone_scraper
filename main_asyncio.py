@@ -101,7 +101,7 @@ async def main():
                                 )
                                 for i in range(
                                     # 1000000
-                                    total
+                                    500000
                                 )
                             ]
                             for response in await asyncio.gather(*futures):
