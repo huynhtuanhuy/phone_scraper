@@ -71,11 +71,10 @@ def checkPhone(phoneNumber):
             result = requestCheck(phoneNumber, company, data)
             if result:
                 break
-            
-        # logging.info("End check: " + phoneNumber.strip())
+        logging.info("End check: " + phoneNumber.strip())
 
 def doWork(phoneNumber, i):
-    # print(i)
+    print(i)
     checkPhone(phoneNumber)
     return True
 
@@ -89,7 +88,8 @@ async def main():
                     if filepath.endswith(".csv"):
                         f = open(filepath, "r")
                         f1 = f.readlines()
-
+                        f.close()
+                        total = len(f1)
                         with concurrent.futures.ThreadPoolExecutor(max_workers=150) as executor:
                             loop = asyncio.get_event_loop()
                             futures = [
@@ -100,8 +100,8 @@ async def main():
                                     i
                                 )
                                 for i in range(
-                                    1000
-                                    # len(f1)
+                                    # 1000000
+                                    total
                                 )
                             ]
                             for response in await asyncio.gather(*futures):
