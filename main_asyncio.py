@@ -74,8 +74,9 @@ def checkPhone(phoneNumber):
         # logging.info("End check: " + phoneNumber.strip())
 
 def doWork(phoneNumber, i):
-    print(i)
+    # print(i)
     checkPhone(phoneNumber)
+    return True
 
 async def main():
     try:
@@ -107,5 +108,6 @@ async def main():
     except KeyboardInterrupt:
         sys.exit(1)
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
