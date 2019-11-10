@@ -11,6 +11,7 @@ hyperlink==19.0.0
 idna==2.8
 incremental==17.5.0
 lxml==4.4.1
+ndg-httpsclient==0.5.1
 parsel==1.5.2
 Protego==0.1.15
 pyasn1==0.4.7
@@ -20,8 +21,10 @@ PyDispatcher==2.0.5
 PyHamcrest==1.9.0
 pyOpenSSL==19.0.0
 pyquery==1.4.1
+PySocks==1.7.1
 queuelib==1.5.0
 requests==2.22.0
+requests-cache==0.5.2
 Scrapy==1.8.0
 service-identity==18.1.0
 six==1.13.0
