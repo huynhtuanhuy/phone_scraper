@@ -89,7 +89,7 @@ async def main():
                         f = open(filepath, "r")
                         f1 = f.readlines()
 
-                        with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+                        with concurrent.futures.ThreadPoolExecutor(max_workers=150) as executor:
                             loop = asyncio.get_event_loop()
                             futures = [
                                 loop.run_in_executor(
