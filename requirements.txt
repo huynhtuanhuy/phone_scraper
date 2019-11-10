@@ -7,6 +7,7 @@ constantly==15.1.0
 cryptography==2.8
 cssselect==1.1.0
 fake-useragent==0.1.11
+faster-than-requests==0.5
 hyperlink==19.0.0
 idna==2.8
 incremental==17.5.0
