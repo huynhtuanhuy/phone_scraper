@@ -1,18 +1,15 @@
 import os
 import json
 import logging
-from threading import Thread
 import sys
-from queue import Queue
 import requests
 import requests_cache
 import random
-import time
+import asyncio
+import concurrent.futures
 from pyquery import PyQuery as pq
 
 requests_cache.install_cache('phone_cached')
-
-concurrent = 100
 
 logging.basicConfig(
     filename='./logs/log.txt',
@@ -74,37 +71,41 @@ def checkPhone(phoneNumber):
             if result:
                 break
             
-        logging.info("End check: " + phoneNumber.strip())
-        q.task_done()
+        # logging.info("End check: " + phoneNumber.strip())
 
-def doWork():
-    while True:
-        phoneNumber = q.get()
-        checkPhone(phoneNumber)
-        time.sleep(0.2)
-        
+def doWork(phoneNumber, i):
+    print(i)
+    checkPhone(phoneNumber)
 
-q = Queue(concurrent)
+async def main():
+    try:
+        for subdir, dirs, files in os.walk("./raw_data"):
+            for file in files:
+                if ".csv" in file:
+                    logging.info("Start check file " + file)
+                    filepath = subdir + os.sep + file
+                    if filepath.endswith(".csv"):
+                        f = open(filepath, "r")
+                        f1 = f.readlines()
 
-for i in range(concurrent):
-    t = Thread(target=doWork)
-    t.daemon = True
-    t.start()
+                        with concurrent.futures.ThreadPoolExecutor(max_workers=150) as executor:
+                            loop = asyncio.get_event_loop()
+                            futures = [
+                                loop.run_in_executor(
+                                    executor, 
+                                    doWork, 
+                                    f1[i].strip(),
+                                    i
+                                )
+                                for i in range(1000)
+                                # range(len(f1))
+                            ]
+                            for response in await asyncio.gather(*futures):
+                                pass
+                            logging.info("End check file " + file)
+            logging.info("End check!")
+    except KeyboardInterrupt:
+        sys.exit(1)
 
-try:
-    for subdir, dirs, files in os.walk("./raw_data"):
-        for file in files:
-            if ".csv" in file:
-                logging.info("Start check!")
-                filepath = subdir + os.sep + file
-                if filepath.endswith(".csv"):
-                    f = open(filepath, "r")
-                    f1 = f.readlines()
-                    for i in range(len(f1)):
-                        if i < 500:
-                            q.put(f1[i].strip())
-                            print(i)
-                    q.join()
-        logging.info("End check!")
-except KeyboardInterrupt:
-    sys.exit(1)
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
