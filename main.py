@@ -35,7 +35,9 @@ def requestCheck(phoneNumber, company, data):
         }
         s.headers.update(headers)
 
-        s.proxies = 'http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
+        s.proxies = dict(
+            http='http://megaproxy.rotating.proxyrack.net:222'
+        )
 
         cookieResponse = s.get(get_url)
         d = pq(cookieResponse.text)
