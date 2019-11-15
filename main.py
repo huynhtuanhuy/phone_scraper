@@ -51,9 +51,9 @@ def requestCheck(phoneNumber, company, data):
 
         with requests_cache.disabled():
             response = s.post(post_url, data=data)
+            print(response.text)
             try:
                 responseJson = json.loads(response.text)
-                print(responseJson)
                 if responseJson['Code'] != 0:
                     f = open("./results/results.csv", "a")
                     f.write(str(phoneNumber)+"\n")
