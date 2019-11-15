@@ -9,7 +9,10 @@ import concurrent.futures
 from memory_profiler import memory_usage
 
 requests_cache.install_cache('phone_cached', expire_after=900)
-
+proxies = dict(
+    http='socks4://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222',
+    https='socks4://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
+)
 concurrentNumber = 100
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=concurrentNumber)
 
@@ -31,13 +34,18 @@ def requestCheck(phoneNumber, company, data):
 
         s = requests.Session()
 
-        s.proxies = 'http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
+        }
+        s.headers.update(headers)
+
+        s.proxies = proxies
 
         cookieResponse = s.get(get_url)
         d = pq(cookieResponse.text)
         token = d('#hdnAntiForgeryTokens').val()
         s.cookies = cookieResponse.cookies
-        
+
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Host': domain.replace('https://', '', 1).replace('http://', '', 1),
@@ -64,6 +72,7 @@ def requestCheck(phoneNumber, company, data):
                 pass
             except Exception as e:
                 logging.error("An error occurred with json parse: " + phoneNumber + " - " + domain + " - " + str(e))
+        s.close()
         pass
     except Exception as e:
         logging.error("An error occurred with get cookies: " + phoneNumber + " - " + str(e))
