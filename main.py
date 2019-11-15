@@ -10,8 +10,8 @@ from memory_profiler import memory_usage
 
 requests_cache.install_cache('phone_cached', expire_after=900)
 proxies = dict(
-    http='socks4://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222',
-    https='socks4://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
+    http='http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222',
+    https='http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
 )
 concurrentNumber = 100
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=concurrentNumber)
