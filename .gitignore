@@ -1,3 +1,4 @@
 logs/*.txt
 raw_data/*.csv
 results/*.csv
+phone_cached.sqlite
