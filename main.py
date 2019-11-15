@@ -9,10 +9,6 @@ import concurrent.futures
 from memory_profiler import memory_usage
 
 requests_cache.install_cache('phone_cached', expire_after=900)
-proxies = dict(
-    http='http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222',
-    https='http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
-)
 concurrentNumber = 100
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=concurrentNumber)
 
@@ -39,7 +35,7 @@ def requestCheck(phoneNumber, company, data):
         }
         s.headers.update(headers)
 
-        s.proxies = proxies
+        s.proxies = 'http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
 
         cookieResponse = s.get(get_url)
         d = pq(cookieResponse.text)
