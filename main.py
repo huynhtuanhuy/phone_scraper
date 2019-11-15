@@ -10,7 +10,7 @@ from memory_profiler import memory_usage
 
 requests_cache.install_cache('phone_cached', expire_after=900)
 
-concurrentNumber = 150
+concurrentNumber = 100
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=concurrentNumber)
 
 
@@ -53,7 +53,7 @@ def requestCheck(phoneNumber, company, data):
             response = s.post(post_url, data=data)
             try:
                 responseJson = json.loads(response.text)
-                # print(responseJson)
+                print(responseJson)
                 if responseJson['Code'] != 0:
                     f = open("./results/results.csv", "a")
                     f.write(str(phoneNumber)+"\n")
