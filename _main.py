@@ -13,7 +13,7 @@ from pyquery import PyQuery as pq
 
 requests_cache.install_cache('phone_cached', expire_after=900)
 
-concurrent = 150
+concurrent = 100
 
 logging.basicConfig(
     filename='./logs/log.txt',
