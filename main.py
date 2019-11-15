@@ -1,18 +1,18 @@
 import os
 import json
 import logging
-from threading import Thread
 import sys
-from queue import Queue
 import requests
 import requests_cache
-import random
-import time
 from pyquery import PyQuery as pq
+import concurrent.futures
+from memory_profiler import memory_usage
 
-requests_cache.install_cache('phone_cached')
+requests_cache.install_cache('phone_cached', expire_after=900)
 
-concurrent = 100
+concurrentNumber = 150
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=concurrentNumber)
+
 
 logging.basicConfig(
     filename='./logs/log.txt',
@@ -20,22 +20,24 @@ logging.basicConfig(
     level=logging.INFO
 )
 
+companyIndex = 0
+
 def requestCheck(phoneNumber, company, data):
     try:
-        randomIndex = random.randint(0, len(company['domains']) - 1)
-        domain = company['domains'][randomIndex]
+        domain = company['domains'][companyIndex]
         get_url = domain+company['get_url']
-        post_url = domain+company['post_url']
         string_requestverificationtoken = company['string_requestverificationtoken']
+        post_url = domain+company['post_url']
 
         s = requests.Session()
+
         s.proxies = 'http://jimmyjo:bbe8a0-ba74c9-402fe3-e5b6d4-05df22@megaproxy.rotating.proxyrack.net:222'
 
         cookieResponse = s.get(get_url)
-        s.cookies = cookieResponse.cookies
         d = pq(cookieResponse.text)
         token = d('#hdnAntiForgeryTokens').val()
-
+        s.cookies = cookieResponse.cookies
+        
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Host': domain.replace('https://', '', 1).replace('http://', '', 1),
@@ -43,70 +45,72 @@ def requestCheck(phoneNumber, company, data):
             'Referer': get_url,
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
             'X-Requested-With': 'XMLHttpRequest',
-            # 'Cookies': cookieResponse.cookies
         }
         headers[string_requestverificationtoken] = token
         s.headers.update(headers)
-        # print(s.cookies)
-        response = s.post(post_url, data=data)
-        responseJson = json.loads(response.text)
-        # print(responseJson)
-        if responseJson['Code'] != 0:
-            f = open("./results/results.csv", "a")
-            f.write(str(phoneNumber)+"\n")
-            f.close()
-            return True
-        else:
-            return False
+
+        with requests_cache.disabled():
+            response = s.post(post_url, data=data)
+            try:
+                responseJson = json.loads(response.text)
+                # print(responseJson)
+                if responseJson['Code'] != 0:
+                    f = open("./results/results.csv", "a")
+                    f.write(str(phoneNumber)+"\n")
+                    f.close()
+                    return True
+                else:
+                    return False
+                pass
+            except Exception as e:
+                logging.error("An error occurred with json parse: " + phoneNumber + " - " + domain + " - " + str(e))
         pass
     except Exception as e:
-        logging.error("An error occurred: " + phoneNumber + " - " + str(e))
+        logging.error("An error occurred with get cookies: " + phoneNumber + " - " + str(e))
         return False
         pass
 
 def checkPhone(phoneNumber):
+    data = {'country':phoneNumber[:2], 'number':phoneNumber[2:]}
+    
+    for i in range(len(companyList)):
+        company = companyList[i]
+        result = requestCheck(phoneNumber, company, data)
+        if result:
+            break
+    return True
+
+def initializer():
+    global companyList
     with open('companies.json') as json_file:
-        data = {'country':phoneNumber[:2], 'number':phoneNumber[2:]}
-
         companyList = json.load(json_file)
-        for company in companyList:
-            result = requestCheck(phoneNumber, company, data)
-            if result:
-                break
-            
-        logging.info("End check: " + phoneNumber.strip())
-        q.task_done()
 
-def doWork():
-    while True:
-        phoneNumber = q.get()
-        checkPhone(phoneNumber)
-        time.sleep(0.2)
-        
-
-q = Queue(concurrent)
-
-for i in range(concurrent):
-    t = Thread(target=doWork)
-    t.daemon = True
-    t.start()
-
-try:
-    for subdir, dirs, files in os.walk("./raw_data"):
-        for file in files:
-            if ".csv" in file:
-                logging.info("Start check file " + file)
+def main():
+    try:
+        for subdir, dirs, files in os.walk("./raw_data"):
+            for file in files:
                 filepath = subdir + os.sep + file
                 if filepath.endswith(".csv"):
-                    f = open(filepath, "r")
-                    f1 = f.readlines()
-                    f.close()
-                    for i in range(len(f1)):
-                        # if i < 1000:
-                        q.put(f1[i].strip())
-                        # print(i)
-                    q.join()
-                logging.info("End check file " + file)
-        logging.info("End check!")
-except KeyboardInterrupt:
-    sys.exit(1)
+                    logging.info("Start check file " + file)
+                    with open(filepath) as filedata:
+                        requests_cache.clear()
+                        initializer()
+                        scrape_list = list()
+                        phoneList = filedata.read().split(',')
+                        
+                        for future in concurrent.futures.wait([executor.submit(checkPhone, phoneNumber) for phoneNumber in phoneList[:1000]]).done:
+                            try:
+                                data = future.result()
+                            except Exception as exc:
+                                print('%r generated an exception: %s' % (url, exc))
+                        logging.info("End check file " + file)
+    except KeyboardInterrupt:
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
+    # mem_usage = memory_usage(main)
+    # print('Maximum memory usage: %s' % max(mem_usage))
+    # print("End check")
+    logging.info("End check!")
