@@ -128,7 +128,7 @@ def main(p):
                         scrape_list = list()
                         phoneList = filedata.read().split(',')
                         p.map(checkPhone, phoneList)
-                        p.terminate()
+                        p.close()
                         p.join()
                         logging.info("End check file " + file)
             logging.info("End check!")
