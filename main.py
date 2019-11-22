@@ -8,7 +8,6 @@ import random
 import time
 import datetime
 from multiprocessing import Pool
-from urllib3.util.retry import Retry
 from pyquery import PyQuery as pq
 from dotenv import load_dotenv
 load_dotenv()
@@ -33,12 +32,6 @@ def generateSessionList(companyList):
         get_url = domain+company['get_url']
         string_requestverificationtoken = company['string_requestverificationtoken']
 
-        retries = Retry(
-            total=5,
-            backoff_factor=0.1,
-            status_forcelist=[500, 502, 503, 504],
-            method_whitelist=frozenset(['GET', 'POST'])
-        )
         s = requests.Session()
         s.proxies = proxyUrl
         s.headers.update({
