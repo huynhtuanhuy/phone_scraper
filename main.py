@@ -4,14 +4,20 @@ import logging
 import sys
 import requests
 import requests_cache
+import random
+import time
+import datetime
+from multiprocessing import Pool
+from urllib3.util.retry import Retry
 from pyquery import PyQuery as pq
-import concurrent.futures
-from memory_profiler import memory_usage
+from dotenv import load_dotenv
+load_dotenv()
 
 requests_cache.install_cache('phone_cached', expire_after=900)
-concurrentNumber = 100
-executor = concurrent.futures.ThreadPoolExecutor(max_workers=concurrentNumber)
 
+concurrent = int(os.getenv("CONCURRENT_PROCESS"))
+companyIndex = int(os.getenv("COMPANY_INDEX"))
+proxyUrl = os.getenv("PROXY_URL")
 
 logging.basicConfig(
     filename='./logs/log.txt',
@@ -19,47 +25,60 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-companyIndex = 0
-
-def requestCheck(phoneNumber, company, data):
-    try:
+def generateSessionList(companyList):
+    companySessionList = []
+    for i in range(len(companyList)):
+        company = companyList[i]
         domain = company['domains'][companyIndex]
         get_url = domain+company['get_url']
         string_requestverificationtoken = company['string_requestverificationtoken']
-        post_url = domain+company['post_url']
 
-        s = requests.Session()
-
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
-        }
-        s.headers.update(headers)
-
-        s.proxies = dict(
-            http='http://megaproxy.rotating.proxyrack.net:222'
+        retries = Retry(
+            total=5,
+            backoff_factor=0.1,
+            status_forcelist=[500, 502, 503, 504],
+            method_whitelist=frozenset(['GET', 'POST'])
         )
-
-        cookieResponse = s.get(get_url)
-        d = pq(cookieResponse.text)
-        token = d('#hdnAntiForgeryTokens').val()
-        s.cookies = cookieResponse.cookies
-
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Host': domain.replace('https://', '', 1).replace('http://', '', 1),
-            'Origin': domain,
-            'Referer': get_url,
+        s = requests.Session()
+        s.proxies = proxyUrl
+        s.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
-            'X-Requested-With': 'XMLHttpRequest',
-        }
-        headers[string_requestverificationtoken] = token
-        s.headers.update(headers)
+        })
 
+        try:
+            cookieResponse = s.get(get_url)
+            s.cookies = cookieResponse.cookies
+            d = pq(cookieResponse.text)
+            token = d('#hdnAntiForgeryTokens').val()
+
+            headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Host': domain.replace('https://', '', 1).replace('http://', '', 1),
+                'Origin': domain,
+                'Referer': get_url,
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+            headers[string_requestverificationtoken] = token
+            s.headers.update(headers)
+            companySessionList.append(s)
+            pass
+        except Exception as e:
+            logging.error("An error occurred on get Cookies: " + domain + " - " + str(e))
+            companySessionList.append(False)
+            pass
+    return companySessionList
+
+def requestCheck(phoneNumber, company, data, s):
+    try:
         with requests_cache.disabled():
+            domain = company['domains'][companyIndex]
+            post_url = domain+company['post_url']
+
             response = s.post(post_url, data=data)
-            print(response.text)
             try:
                 responseJson = json.loads(response.text)
+                
                 if responseJson['Code'] != 0:
                     f = open("./results/results.csv", "a")
                     f.write(str(phoneNumber)+"\n")
@@ -70,29 +89,41 @@ def requestCheck(phoneNumber, company, data):
                 pass
             except Exception as e:
                 logging.error("An error occurred with json parse: " + phoneNumber + " - " + domain + " - " + str(e))
-        s.close()
-        pass
     except Exception as e:
-        logging.error("An error occurred with get cookies: " + phoneNumber + " - " + str(e))
+        logging.error("An error occurred: " + phoneNumber + " - " + str(e))
         return False
         pass
+
+def refreshCompanySession():
+    global companySessionList
+    global companySessionListGenerateTime
+    companySessionList = generateSessionList(companyList)
+    companySessionListGenerateTime = datetime.datetime.now()
 
 def checkPhone(phoneNumber):
     data = {'country':phoneNumber[:2], 'number':phoneNumber[2:]}
     
+    if (datetime.datetime.now() - companySessionListGenerateTime) > datetime.timedelta(minutes=15):
+        refreshCompanySession()
+    
     for i in range(len(companyList)):
         company = companyList[i]
-        result = requestCheck(phoneNumber, company, data)
-        if result:
-            break
-    return True
+
+        if companySessionList[i] != False:
+            result = requestCheck(phoneNumber, company, data, companySessionList[i])
+            if result:
+                break
 
 def initializer():
     global companyList
+    global companySessionList
+    global companySessionListGenerateTime
     with open('companies.json') as json_file:
         companyList = json.load(json_file)
+        companySessionList = generateSessionList(companyList)
+        companySessionListGenerateTime = datetime.datetime.now()
 
-def main():
+def main(p):
     try:
         for subdir, dirs, files in os.walk("./raw_data"):
             for file in files:
@@ -100,24 +131,18 @@ def main():
                 if filepath.endswith(".csv"):
                     logging.info("Start check file " + file)
                     with open(filepath) as filedata:
-                        requests_cache.clear()
-                        initializer()
+                        i = 0
                         scrape_list = list()
                         phoneList = filedata.read().split(',')
-                        
-                        for future in concurrent.futures.wait([executor.submit(checkPhone, phoneNumber) for phoneNumber in phoneList[:1000]]).done:
-                            try:
-                                data = future.result()
-                            except Exception as exc:
-                                print('%r generated an exception: %s' % (url, exc))
+                        p.map(checkPhone, phoneList)
+                        p.terminate()
+                        p.join()
                         logging.info("End check file " + file)
+            logging.info("End check!")
     except KeyboardInterrupt:
         sys.exit(1)
 
 
 if __name__ == '__main__':
-    main()
-    # mem_usage = memory_usage(main)
-    # print('Maximum memory usage: %s' % max(mem_usage))
-    # print("End check")
-    logging.info("End check!")
+    p = Pool(concurrent, initializer, ())
+    main(p)

@@ -1,10 +1,11 @@
 [
     {
         "domains": [
-			"http://m.100perak.com",
-			"http://m.96321478.com",
-			"http://m.hdpqqdw.com",
-			"http://m.qqjackpot.com"
+			"http://100perak.com",
+			"http://96321478.com",
+			"http://hdpqqdw.com",
+			"http://qqjackpot.com",
+			"http://qqwin.net"
         ],
 		"get_url": "/id-ID/Member/Register",
 		"post_url": "/id-ID/Member/CheckNumber",
@@ -16,18 +17,18 @@
     },
     {
         "domains": [
-			"http://ibosport1.com",
-			"http://180ibo.net",
-			"http://bola180.com",
-			"http://dadu180.com",
-			"http://ibo789.com",
-			"http://ibosport.club",
-			"http://ibosport.com",
-			"http://ibosport.live",
-			"http://ind180.com",
-			"http://pialadunia180.com",
-			"http://rendangindo.com",
-			"http://sotoindo.com"
+			"https://ibosport1.com",
+			"https://180ibo.net",
+			"https://bola180.com",
+			"https://dadu180.com",
+			"https://ibo789.com",
+			"https://ibosport.club",
+			"https://ibosport.com",
+			"https://ibosport.live",
+			"https://ind180.com",
+			"https://pialadunia180.com",
+			"https://rendangindo.com",
+			"https://sotoindo.com"
         ],
 		"get_url": "/en-US/Member/Register",
 		"post_url": "/en-US/Member/CheckNumber",
@@ -129,14 +130,14 @@
     },
     {
         "domains": [
-			"http://10juta.com",
-			"http://akai88.com",
-			"http://fb88.info",
-			"http://fbdpoker.com",
-			"http://fullbet88.com",
-			"http://fullbet88aa.com",
-			"http://qqfb.biz",
-			"http://tigasodara.com"
+			"https://10juta.com",
+			"https://akai88.com",
+			"https://fb88.info",
+			"https://fbdpoker.com",
+			"https://fullbet88.com",
+			"https://fullbet88aa.com",
+			"https://qqfb.biz",
+			"https://tigasodara.com"
         ],
 		"get_url": "/en-US/Member/Register",
 		"post_url": "/en-US/Member/CheckNumber",
